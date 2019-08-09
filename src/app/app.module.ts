@@ -15,7 +15,8 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 import { ConectionService } from './service/conection.service';
 import {HttpModule} from '@angular/http';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,8 @@ import {HttpModule} from '@angular/http';
     MatExpansionModule,
     MatButtonModule,
     HttpClientModule,HttpModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     ConectionService,

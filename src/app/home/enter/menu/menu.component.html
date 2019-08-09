@@ -1,20 +1,102 @@
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{oneElement.name}}
-      </mat-panel-title>
-      <mat-panel-description>
-        This is a summary of the content
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-   
-    <p>This is the primary content of the panel.</p>
-   
-    <mat-action-row>
-      <button mat-button>Click me</button>
-    </mat-action-row>
-</mat-expansion-panel>
+<div style="width: 70%;    text-align: center;">
+    <button class="btn-actualizar" (click)=" ngOnInit()" >Actualizar</button>
+</div>
+<br>
+<div style="width: 70%" *ngFor='let element of princElement'> 
+    <mat-expansion-panel>
+        
+        <mat-expansion-panel-header (click)=" consultaSubCat(element.id_panel)">       
+          <mat-panel-title>
+              <div>                  
+                  {{element.name}}                 
+              </div>
+          </mat-panel-title>
+          <mat-panel-description class="">
+              
+          </mat-panel-description>
+        </mat-expansion-panel-header>       
+        <div *ngFor='let categoria of subElements' >
+          <div>  
+              &emsp;&emsp;
+              <img src="{{categoria.url_image}}" style="width: 5%" alt="">
+              {{categoria.name}}
+          </div>
+          
+        </div>       
+        <mat-action-row>
+          <button mat-button>Click me</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</div>
+<br>
+<div style="width: 70%;text-align: center;" >
+    <button class="btn-plus" (click)="addItem()"  style="border: none"><img src="assets/img/panel/plus.png" class="img-plus"></button>
+</div>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" hidden>  
+    <label>
+        First Name:
+        <input type="text" formControlName="firstName">
+    </label>
+    <label>
+        Last Name:
+        <input type="text" formControlName="lastName">
+    </label>
+    <label>
+        Last Name:
+        <input type="file" formControlData="fileF">
+    </label>
+    <button type="submit">Enviar</button>
+</form>
 
-<button (click)=" consulta()">Abrir</button>
+
+<div hidden> 
+        <h1>Angular 7 FormData (multipart/data-form) Example</h1>
+    <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit1()">      
+        <div>
+        <input type="file" name="profile" (change)="onFileSelect($event)" />
+        </div>
+        <div>
+        <button type="submit">Upload</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+<div [hidden]="hiddenAdd">
+    <div class="row" >
+        <div class="create-item">AGREGAR ÍTEM </div> 
+        <br>       
+    </div>
+    <div style="overflow:hidden;  height:300px; width:100%; ">
+        <div class="row">
+            <div [hidden]="hiddenAdd"> 
+                <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit1()">
+                    <tr>
+                        <th>TÍTULO</th>
+                        <th><input type="text" name="firstName" formControlName="firstName" placeholder="Titulo" style="width: 100%;" required></th>
+                    </tr>   
+                    <tr>
+                        <th>ICONO</th>
+                        <th><label for=""><input type="file" name="profileIcon" id="profileIcon" (change)="onFileSelectIcon($event)"  class="btn btn-primary" required></label></th>
+                    </tr>
+                    <tr>
+                        <th>IMÁGENES(opcional)</th>
+                        <th><input type="file" name="profileFile" id="file" (change)="onFileSelectFile($event)" required></th>
+                    </tr>
+                    <tr>
+                        <th>PDF</th>
+                        <th><input type="file" name="profilePdf"  id="pdf" (change)="onFileSelectPdf($event)" required></th>
+                    </tr>
+                    <br>
+                    <button type="submit">Guardar</button>&emsp;
+                    <button type="button" (click)="cancelAdd()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
   

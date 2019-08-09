@@ -7,9 +7,14 @@ import { EnterComponent } from './enter/enter.component';
 import { MenuComponent } from './enter/menu/menu.component';
 import { 
   MatExpansionModule, 
-  MatButtonModule 
+  MatButtonModule,
+   
 } from '@angular/material';
 import { ConectionService } from '../service/conection.service';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [HomeComponent, EnterComponent, MenuComponent],
@@ -17,10 +22,15 @@ import { ConectionService } from '../service/conection.service';
     CommonModule,
     HomeRoutingModule,    
     MatExpansionModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [
     ConectionService,
+    MatInputModule
   ]
 })
 export class HomeModule { }
