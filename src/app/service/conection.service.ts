@@ -19,23 +19,45 @@ export class ConectionService {
     let url = this.NetWorkUrl + "/conec.php";
     return this.http.get(url);
   }
+
+  consultaItem() {    
+    let url = this.NetWorkUrl + "/controller/a.php";
+    return this.http.get(url);
+  }
+  addItem(uploadForm){
+    const formData = new FormData();
+    formData.append('icon', uploadForm.get('icon').value);
+    formData.append('file', uploadForm.get('file').value);
+    formData.append('pdf', uploadForm.get('pdf').value);
+
+    formData.append('name',uploadForm.get('name').value);
+    formData.append('subname',uploadForm.get('subname').value);
+
+    formData.append('level',uploadForm.get('level').value);
+    formData.append('idfather',uploadForm.get('idfather').value);
+    formData.append('flag',uploadForm.get('flag').value);
+
+    let url =this.NetWorkUrl + "/controller/item-update.php";
+    return this.http.post(url, formData)
+  }
+
   addImage(data){
     let url =this.NetWorkUrl + "/cargar.php";
     console.log("url:"+url);
     return this.http.post(url,data);
-    /*const formData = new FormData();
-    formData.append('file', this.uploadForm.get('profile').value);
-
-    this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );*/
   }
   addImage2(uploadForm){
     const formData = new FormData();
-    formData.append('icon', uploadForm.get('profileIcon').value);
-    formData.append('file', uploadForm.get('profileFile').value);
-    formData.append('pdf', uploadForm.get('profilePdf').value);
+    formData.append('icon', uploadForm.get('icon').value);
+    formData.append('file', uploadForm.get('file').value);
+    formData.append('pdf', uploadForm.get('pdf').value);
+    formData.append('name',uploadForm.get('name').value);
+    formData.append('subname',uploadForm.get('subname').value);
+
+    formData.append('level',uploadForm.get('level').value);
+    formData.append('idfather',uploadForm.get('idfather').value);
+    formData.append('flag',uploadForm.get('flag').value);
+
     let url =this.NetWorkUrl + "/controller/item-update.php";
     return this.http.post(url, formData)
   }  

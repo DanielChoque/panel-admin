@@ -1,102 +1,156 @@
-<div style="width: 70%;    text-align: center;">
+<div style="width: 70%;    text-align: center;" hidden>
     <button class="btn-actualizar" (click)=" ngOnInit()" >Actualizar</button>
 </div>
 <br>
-<div style="width: 70%" *ngFor='let element of princElement'> 
-    <mat-expansion-panel>
-        
+<!--Obtenidos por sqlite-->
+<div style="width: 90%" *ngFor='let element of princElement' hidden> 
+    <mat-expansion-panel>        
         <mat-expansion-panel-header (click)=" consultaSubCat(element.id_panel)">       
           <mat-panel-title>
               <div>                  
-                  {{element.name}}                 
+                    <img src="{{element.url_image}}" style="width: 5%" alt="" > {{element.name}}                 
               </div>
           </mat-panel-title>
           <mat-panel-description class="">
-              
+               
           </mat-panel-description>
-        </mat-expansion-panel-header>       
-        <div *ngFor='let categoria of subElements' >
-          <div>  
-              &emsp;&emsp;
-              <img src="{{categoria.url_image}}" style="width: 5%" alt="">
-              {{categoria.name}}
-          </div>
-          
-        </div>       
+        </mat-expansion-panel-header> 
+        <div class="">
+            <tr>
+                <th style="width: 90%">
+                    <div *ngFor='let categoria of subElements' >
+                        <div style="margin-left: 10px"> 
+                            <img src="{{categoria.url_image}}" style="width: 5%" alt="">
+                            {{categoria.name}}
+                        </div>                        
+                    </div> 
+                </th>                
+            </tr>
+        </div>      
+             
         <mat-action-row>
           <button mat-button>Click me</button>
         </mat-action-row>
     </mat-expansion-panel>
 </div>
 <br>
-<div style="width: 70%;text-align: center;" >
-    <button class="btn-plus" (click)="addItem()"  style="border: none"><img src="assets/img/panel/plus.png" class="img-plus"></button>
+
+
+<!--scroll items para mostrar elemtos-->
+<div style="display: block;width:900px;height: 500px;overflow-y: auto; overflow-x:   hidden; margin-left: 50px">
+        <div style="width: 90%" *ngFor='let element of princItem'> 
+                <mat-expansion-panel>        
+                    <mat-expansion-panel-header (click)=" consultaSubCat(element.id)">       
+                      <mat-panel-title>
+                          <div>                  
+                                <img src="{{element.url_image}}" style="width: 5%" alt="" > {{element.name}}                 
+                          </div>
+                      </mat-panel-title>
+                      <mat-panel-description class="">
+                           
+                      </mat-panel-description>
+                    </mat-expansion-panel-header> 
+                    <div class="">
+                        <tr>
+                            <th style="width: 90%">
+                                <div *ngFor='let categoria of subElements' >
+                                    <div style="margin-left: 10px"> 
+                                        <img src="{{categoria.url_image}}" style="width: 5%" alt="">
+                                        {{categoria.name}}
+                                        <button mat-button (click)="functionItem('Editar')">Editar</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button mat-raised-button  color="warn" (click)="functionItem('clear')">Eliminar</button>
+                                    </div>                        
+                                </div> 
+                            </th>                
+                        </tr>
+                    </div>      
+                         
+                    <mat-action-row>
+                      <button mat-button (click)="functionItem('Editar')">Editar</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <button mat-raised-button  color="warn" (click)="functionItem('clear')">Eliminar</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </div>
 </div>
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" hidden>  
-    <label>
-        First Name:
-        <input type="text" formControlName="firstName">
-    </label>
-    <label>
-        Last Name:
-        <input type="text" formControlName="lastName">
-    </label>
-    <label>
-        Last Name:
-        <input type="file" formControlData="fileF">
-    </label>
-    <button type="submit">Enviar</button>
-</form>
+<!--Popup tranparente-->
+<div id="overlay" [hidden]="hiddenOverlay"></div>
 
-
-<div hidden> 
-        <h1>Angular 7 FormData (multipart/data-form) Example</h1>
-    <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit1()">      
-        <div>
-        <input type="file" name="profile" (change)="onFileSelect($event)" />
+<!--menu Agragar elelmto-->
+<div id="popup" [hidden]="hiddenPop">
+    <form class="example-form" [formGroup] = "uploadItemForm"  name="myform" id="myform">
+        <div [hidden]="!hiddenPopSave" >
+            <mat-form-field class="example-form-field">
+                    <input matInput type="text" formControlName="name" placeholder="TÍTULO" name="name" >
+                </mat-form-field>
+                <br>
+                <mat-form-field class="example-form-field">
+                    <input matInput type="text" formControlName="subname" placeholder="SUB TÍTULO" name="subname" >                
+                </mat-form-field>
+                
+                <tr>
+                    <th class="img-add">
+                        <button type="button" mat-raised-button (click)="fileInputIcon.click()">ICONO</button>
+                        <input hidden  #fileInputIcon type="file" accept='image/*' name="icon" (change)="selectIcon(fileInputIcon.files)">
+                        <span style="color:red;" *ngIf="messageIcon">{{messageIcon}}</span>
+                    </th>
+                    <th>
+                        <div>
+                            <img class="img-charge" [src]="imgURLIcon"  *ngIf="imgURLIcon">
+                        </div>
+                    </th>
+                </tr>
+                    
+                <tr>
+                    <th class="img-add">
+                        <button type="button" mat-raised-button (click)="fileInputFile.click()">IMÁGENES(opcional)</button>
+                        <input hidden  #fileInputFile type="file" accept='image/*' name="file" (change)="selectFile(fileInputFile.files)">
+                        <span style="color:red;" *ngIf="messageFile">{{messageFile}}</span>
+                    </th>
+                    <th>
+                        <div>
+                            <img class="img-charge" [src]="imgURLFile"  *ngIf="imgURLFile">
+                        </div>
+                    </th>
+                </tr>  
+            
+                <tr>
+                    <th class="img-add">
+                        <button type="button" mat-raised-button (click)="fileInputPdf.click()">PDF</button>
+                        <input hidden  #fileInputPdf type="file" accept='application/pdf' name="pdf" (change)="selectPdf(fileInputPdf.files)">
+                    </th>
+                    <th>
+                        <div>
+                                <span style="color:#002D57;" *ngIf="messagePdf">{{messagePdf}}</span>
+                            <!--img class="img-charge" [src]="imgURLPdf"  *ngIf="imgURLPdf"-->
+                            <!--iframe  class="img-charge" [src]="imgURLPdf"  *ngIf="imgURLPdf"></iframe-->
+                        </div>              
+                    </th>
+                </tr> 
+                <br><br>
+                <button mat-stroked-button  color="primary" type="submit"  (click)="functionItem('save')">Guardar</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                <button mat-raised-button  color="warn" type="reset" (click)="functionItem('salirPop')">Cancelar</button>
         </div>
-        <div>
-        <button type="submit">Upload</button>
+        <div id="popupQ" [hidden]="hiddenPopSave">   
+            <br>
+           {{messagePost}}
+            <br>
+            <button mat-stroked-button  color="primary" type="submit"  (click)="save('yes')">Si</button> &nbsp;&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button  color="warn" type="reset" (click)="save('no')">No</button>
         </div>
+        <div id="popupQ" [hidden]="hiddenPopRes">   
+            <br>
+            <p style="color: green;font-size: 25px">Registro correcto</p>
+            <br>
+            <button mat-stroked-button  color="primary" type="reset"  (click)="exitReg()">Aceptar</button>
+        </div>
+        <div id="popupQ" [hidden]="hiddenProgresBar">   
+           <img src="assets/img/panel/envio.gif" alt="">
+        </div>
+        
     </form>
 </div>
 
-
-
-
-<div [hidden]="hiddenAdd">
-    <div class="row" >
-        <div class="create-item">AGREGAR ÍTEM </div> 
-        <br>       
-    </div>
-    <div style="overflow:hidden;  height:300px; width:100%; ">
-        <div class="row">
-            <div [hidden]="hiddenAdd"> 
-                <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit1()">
-                    <tr>
-                        <th>TÍTULO</th>
-                        <th><input type="text" name="firstName" formControlName="firstName" placeholder="Titulo" style="width: 100%;" required></th>
-                    </tr>   
-                    <tr>
-                        <th>ICONO</th>
-                        <th><label for=""><input type="file" name="profileIcon" id="profileIcon" (change)="onFileSelectIcon($event)"  class="btn btn-primary" required></label></th>
-                    </tr>
-                    <tr>
-                        <th>IMÁGENES(opcional)</th>
-                        <th><input type="file" name="profileFile" id="file" (change)="onFileSelectFile($event)" required></th>
-                    </tr>
-                    <tr>
-                        <th>PDF</th>
-                        <th><input type="file" name="profilePdf"  id="pdf" (change)="onFileSelectPdf($event)" required></th>
-                    </tr>
-                    <br>
-                    <button type="submit">Guardar</button>&emsp;
-                    <button type="button" (click)="cancelAdd()">Cancelar</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<div style="width: 70%;text-align: center;" [hidden]="!hiddenAdd">
+    <button class="btn-plus" (click)="functionItem('addItem')"  style="border: none"><img src="assets/img/panel/plus.png" class="img-plus"></button>
 </div>
 
-
-  

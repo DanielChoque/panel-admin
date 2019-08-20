@@ -16,6 +16,7 @@ import {MatInputModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 
+
 @NgModule({
   declarations: [HomeComponent, EnterComponent, MenuComponent],
   imports: [
@@ -26,11 +27,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule
   ],
   providers: [
     ConectionService,
-    MatInputModule
   ]
 })
 export class HomeModule { }
