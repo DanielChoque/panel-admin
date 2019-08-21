@@ -60,5 +60,17 @@ export class ConectionService {
 
     let url =this.NetWorkUrl + "/controller/item-update.php";
     return this.http.post(url, formData)
-  }  
+  }
+  delelteItem(id){
+    const formData = new FormData();
+    formData.append('id', id);
+    let url =this.NetWorkUrl + "/controller/item-delete.php";
+    return this.http.post(url, formData)
+  }
+  selectOneItem(id){
+    const formData = new FormData();
+    formData.append('id', id);
+    let url =this.NetWorkUrl + "/controller/item-view-one.php";
+    return this.http.post(url, formData)
+  }
 }

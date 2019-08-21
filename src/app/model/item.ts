@@ -3,6 +3,7 @@ import { File } from './file';
 export class Item {
     id:number
     name:string
+    subname:string
     icon:number
     file:number
     pdf:number

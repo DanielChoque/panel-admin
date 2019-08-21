@@ -8,6 +8,7 @@ import { MenuComponent } from './enter/menu/menu.component';
 import { 
   MatExpansionModule, 
   MatButtonModule,
+  MatIconModule,
    
 } from '@angular/material';
 import { ConectionService } from '../service/conection.service';
@@ -15,6 +16,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatProgressBarModule} from '@angular/material'
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatTreeModule,
+    MatIconModule,
+    MatProgressBarModule
   ],
   providers: [
     ConectionService,
