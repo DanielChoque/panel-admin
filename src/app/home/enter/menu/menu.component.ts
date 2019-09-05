@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.oneItem=new Item();
     this.consultaStar();    
       this.uploadItemForm = this.formBuilder.group({
       icon: ['', Validators.required],
@@ -35,7 +36,8 @@ export class MenuComponent implements OnInit {
     });
   
     
-  }  
+  } 
+
   consultaStar(){
     this.servItemService.consultaResp().subscribe(
       res=>{
@@ -50,6 +52,7 @@ export class MenuComponent implements OnInit {
       error=>console.log("error:"+error)
     )
   }
+
   consultaSubCat(id){
    // console.log("id:"+id);
     this.subElements = new Array<PanelItem>(); 
@@ -59,6 +62,7 @@ export class MenuComponent implements OnInit {
       }      
     });
   }
+
   consultaCatPrinci(){
     this.princElement = new Array<PanelItem>(); 
     this.initialElemets.forEach(element => {
@@ -68,6 +72,7 @@ export class MenuComponent implements OnInit {
     });
     this.consultaItemStar();
   }
+
   consultaItemStar(){
     this.servItemService.consultaItem().subscribe(
       res=>{
@@ -79,7 +84,7 @@ export class MenuComponent implements OnInit {
           }
           else{
             this.initialItem=JSON.parse(resp);
-            this.oneItem=this.initialItem[0];
+            //this.oneItem=this.initialItem[0];
             this.consultaItemPrinci();          
           }
         }
@@ -87,6 +92,7 @@ export class MenuComponent implements OnInit {
       error=>console.log(error)
     )
   }
+
   consultaItemPrinci(){
     this.princItem = new Array<Item>(); 
     this.initialItem.forEach(element => {
@@ -99,13 +105,11 @@ export class MenuComponent implements OnInit {
     console.log("add:");
     this.hiddenAdd=false
   }
+
   cancelAdd(){
     this.hiddenAdd=true
   }
-  saveCatPrinc(){
-    console.log()
-  }
-
+  
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.log(this.uploadItemForm);
@@ -115,7 +119,9 @@ export class MenuComponent implements OnInit {
         console.log("save:" + resp);
         if(resp=="save"){
           this.hiddenProgresBar=true;
-          this.hiddenPopRes=false; 
+          this.hiddenPopRes=false;
+          console.log("this.catIdfather"+this.catIdfather);
+          this.consultaSubCatItemPrueba(this.catIdfather); 
         }else{
           this.hiddenProgresBar=true;
           this.messagePost= resp+'\n ¿Desea Reintentar?';
@@ -145,13 +151,13 @@ export class MenuComponent implements OnInit {
     }
   }
 
-
   functionItem(func){
     if(func=="salirPop"){
       this.resetItems();
     }
     if(func=="addItem"){
-      this.hiddenPop=false;
+      //this.hiddenPop=false;
+      this.hiddenPopTypeCat=false;
       this.hiddenOverlay=false;
     }
     if(func=="save"){
@@ -165,13 +171,20 @@ export class MenuComponent implements OnInit {
         alert("Faltan campos");
       }      
     }
-    if(func=="clear"){
-      console.log("borrar");
+    if(func=="edit"){
+      console.log(this.verificarCampos());
+      if(this.verificarCampos()){
+        //this.onSubmit();
+        this.saveQuestion();
+      }
+      else{
+        console.log("Faltan campos");
+        alert("Faltan campos");
+      }      
     }
-    if(func=="clearItem"){
 
-    }
   }
+
   resetItems(){
     this.idItem=0;
     this.hiddenPop=true;
@@ -181,6 +194,7 @@ export class MenuComponent implements OnInit {
     this.hiddenPopRes=true;
     this.hiddenPopDelete=true;
     this.hiddenEdit=true;
+    this.hiddenPopTypeCat=true;
     this.imgURLIcon=undefined;
     this.imgURLFile=undefined;
     this.imgURLPdf=undefined;
@@ -194,7 +208,9 @@ export class MenuComponent implements OnInit {
     this.uploadItemForm.get('name').setValue("");
     this.uploadItemForm.get('subname').setValue("");
     this.oneItem=new Item();
+    this.ngOnInit();
   }
+
   verificarCampos(){
     if(
       this.uploadItemForm.get('name').value==""||
@@ -208,9 +224,15 @@ export class MenuComponent implements OnInit {
       return true;
     }
   }
+
   setValues(){
-    this.uploadItemForm.get('level').setValue(0);
-    this.uploadItemForm.get('idfather').setValue(0);
+    if(this.oneItem.id>0){
+      this.uploadItemForm.get('idfather').setValue(this.oneItem.id);
+    }else{
+      this.uploadItemForm.get('idfather').setValue(0);
+    }
+    this.uploadItemForm.get('idfather').setValue(this.catIdfather);
+    this.uploadItemForm.get('level').setValue(this.catLevel);
     this.uploadItemForm.get('flag').setValue(1);
   }
 
@@ -230,6 +252,7 @@ export class MenuComponent implements OnInit {
       this.imgURLIcon =undefined
     }
   }
+
   selectFile(event) { 
     /**verifiacamos si existen un elemento*/ 
     if (event.length > 0) {
@@ -246,6 +269,7 @@ export class MenuComponent implements OnInit {
       this.imgURLFile =undefined
     }
   }
+
   selectPdf(event) { 
     /**verifiacamos si existen un elemento*/ 
     if (event.length > 0) {
@@ -271,6 +295,7 @@ export class MenuComponent implements OnInit {
     this.hiddenPopSave=false;
     //this.hiddenPop=true;    
   }
+
   save(res){
     if(res=="yes"){
       this.hiddenProgresBar=false;
@@ -285,10 +310,12 @@ export class MenuComponent implements OnInit {
       this.resetItems();
     }
   }
+
   exitReg(){
     this.ngOnInit();
     this.resetItems();
   }
+
   funtionDeleteItem(id){
     this.idItem=id;
     this.hiddenPopDelete=false;
@@ -297,20 +324,14 @@ export class MenuComponent implements OnInit {
 
   funtionDelete(res){
     if(res=="yes"){
-      //this.hiddenProgresBar=false;
-      //this.setValues();
-      //this.onSubmit();
       console.log("delete id: "+this.idItem)
       this.deleteItem();
     }
     if(res=="no"){
-      //this.hiddenPop=true;
-      //this.hiddenAdd=true;
-      //this.hiddenPopSave=true;
-     // this.hiddenOverlay=true;
       this.resetItems();
     }
   }
+
   deleteItem(){
     this.servItemService.delelteItem(this.idItem).subscribe(
       res=>{
@@ -328,6 +349,7 @@ export class MenuComponent implements OnInit {
       error=>console.log("error:"+error)
     )
   }
+
   selectItem(id){
     this.servItemService.selectOneItem(id).subscribe(
       res=>{
@@ -354,28 +376,42 @@ export class MenuComponent implements OnInit {
     this.uploadItemForm.get('id').setValue(this.oneItem.id+"");
     this.uploadItemForm.get('name').setValue(this.oneItem.name);
     this.uploadItemForm.get('subname').setValue(this.oneItem.subname);
-    this.uploadItemForm.get('icon').setValue(this.oneItem.icon);
-    this.uploadItemForm.get('file').setValue(this.oneItem.file);
-    this.uploadItemForm.get('pdf').setValue(this.oneItem.pdf);
+    //this.uploadItemForm.get('icon').setValue(this.oneItem.icon);
+    //this.uploadItemForm.get('file').setValue(this.oneItem.file);
+    //this.uploadItemForm.get('pdf').setValue(this.oneItem.pdf);
     this.uploadItemForm.get('level').setValue(this.oneItem.level+"");
     this.uploadItemForm.get('idfather').setValue(this.oneItem.idfather);
     this.uploadItemForm.get('flag').setValue(this.oneItem.flag);
+    var type=this.oneItem.level;
+    if(type==0){
+      console.log(type)
+      this.hiddenFileInput=true;
+      this.hiddenPdfInput=true;
+    }
+    if(type==1){console.log(type)
+      this.hiddenFileInput=true;
+      this.hiddenPdfInput=false;    
+    }
+    if(type==2){console.log(type)
+      this.hiddenFileInput=false;
+      this.hiddenPdfInput=true;
+    }
     if(this.oneItem.icon>0){
-      this.imgURLIcon="http://localhost/back-panel/archivos/"+this.oneItem.iconObj.name;
+      this.imgURLIcon=this.urlBackEnd+"/archivos/"+this.oneItem.iconObj.name;
     }
     if(this.oneItem.file>0){
-      this.imgURLFile="http://localhost/back-panel/archivos/"+this.oneItem.fileObj.name;
+      this.uploadItemForm.get('file').setValue("");
+      this.imgURLFile=this.urlBackEnd+"/archivos/"+this.oneItem.fileObj.name;
     }
     if(this.oneItem.pdf>0){
       this.messagePdf=this.oneItem.pdfObj.name;
-      //this.imgURLPdf="http://localhost/back-panel/archivos/"+this.oneItem.iconObj.name;
+      this.uploadItemForm.get('pdf').setValue("");
     }
   }
+
   funtionEditItem(id){
     console.log("id:"+id);
-    this.selectItem(id);
-    this.uploadItemForm.get('name').setValue("Daniel");
-    this.uploadItemForm.get('subname').setValue("Sub");
+    this.selectItem(id);    
     this.hiddenEdit=false;
     this.hiddenOverlay=false;
   }
@@ -387,11 +423,128 @@ export class MenuComponent implements OnInit {
   deleteCat(id){
     console.log("delete CAt id:"+id);
   }
+
+  consultaSubCatItem(id){
+    console.log("id:"+id);
+     this.subItem = new Array<Item>(); 
+     this.subAuxItem=new Array<Item>();
+     this.initialItem.forEach(element => {
+      console.log("idfather:"+element.idfather);
+       if(element.idfather==id){
+         this.subItem.push(element);
+         this.subAuxItem.push(element);
+       }      
+     });
+   }
+
+   homeListItem(){
+     this.hiddenSubCat=true;
+     this.titlePrinc="Lista de categorías :";
+     this.ngOnInit();
+   }
+
+   callSubCat(id){
+    this.oneItem=new Item();
+    this.subAuxItem=new Array<Item>();
+    this.subAuxItem=this.subItem;
+    this.subItem=new Array<Item>();
+    this.initialItem.forEach(element => {
+      if(element.id==id){
+        this.oneItem=element;
+        this.titlePrinc=this.titlePrinc+element.name+"/"
+      } 
+      console.log("idfather:"+element.idfather);
+      if(element.idfather==id){
+        this.subItem.push(element);
+      }  
+    });
+    this.hiddenSubCat=false;
+  }
+
+  consultaSubCatItemPrueba(id){
+    
+    this.subItem = new Array<Item>();
+    if(this.subAuxItem.length>0){
+      this.initialItem.forEach(element => {        
+      if(element.idfather==id){
+        this.catIdfather=id;
+        this.subItem.push(element);
+      }      
+    });
+    }else{
+      this.initialItem.forEach(element => {
+      if(element.idfather==id){
+        this.subItem.push(element);
+      }      
+    });
+    }     
+  }
+  saveEdit(res){
+    if(res=="yes"){
+      this.hiddenProgresBar=false;
+      //this.setValues();
+      //this.resetItems();
+      this.onSubmitEdit();
+    }
+    if(res=="no"){
+      this.hiddenPop=true;
+      this.hiddenAdd=true;
+      this.hiddenPopSave=true;
+      this.hiddenOverlay=true;
+      this.resetItems();
+    }
+  }
+
+  onSubmitEdit() {
+    // TODO: Use EventEmitter with form value
+    console.log(this.uploadItemForm);
+   this.servItemService.editItem(this.uploadItemForm).subscribe(res=>{     
+      var resp=JSON.parse(JSON.stringify(res))._body;      
+      if(resp!=""){
+        console.log("edit:" + resp);
+        if(resp=="edit"){
+          this.hiddenProgresBar=true;
+          this.hiddenPopRes=false; 
+          this.resetItems();
+        }else{
+          this.hiddenProgresBar=true;
+          this.messagePost= resp+'\n ¿Desea Reintentar?';
+        }
+      }
+      console.log("not edit:" + resp);
+    },
+    error=>{
+      console.log("error:"+error);
+      this.hiddenProgresBar=true;
+      this.messagePost='NO SE PUEDEN GUARDAR LOS ELEMENTOS \n ¿Desea Reintentar?';
+    })
+   // this.uploadItemForm.reset();   
+  }
+  typeCat(type){
+    this.hiddenPopTypeCat=true;
+    this.catLevel=type;
+    if(type==0){
+      console.log(type)
+      this.hiddenFileInput=true;
+      this.hiddenPdfInput=true;
+    }
+    if(type==1){console.log(type)
+      this.hiddenFileInput=true;
+      this.hiddenPdfInput=false;    
+    }
+    if(type==2){console.log(type)
+      this.hiddenFileInput=false;
+      this.hiddenPdfInput=true;
+    }
+    this.hiddenPop=false
+  }
   initialElemets: Array<PanelItem> =new Array<PanelItem>();
   initialItem: Array<Item> =new Array<Item>();
   oneElement:PanelItem=new PanelItem();
   oneItem:Item=new Item();
   subElements: PanelItem[];
+  subItem:Item[];
+  subAuxItem:Array<Item> =new Array<Item>();
   princElement:PanelItem[];
   princItem:Item[];
   hiddenAdd:boolean=true;
@@ -402,7 +555,11 @@ export class MenuComponent implements OnInit {
   hiddenProgresBar:boolean=true;
   hiddenPopDelete:boolean=true;
   hiddenEdit:boolean=true;
- 
+  hiddenSubCat:boolean=true;
+  hiddenPopTypeCat:boolean=true;
+  hiddenFileInput:boolean=true;
+  hiddenPdfInput:boolean=true;
+  
   
   uploadItemForm:FormGroup;
   
@@ -417,11 +574,18 @@ export class MenuComponent implements OnInit {
   public messageFile: string;
   public messagePdf: string;
   public messagePost="¿Guardar elementos?";
+  public messageEdit="¿Editar elementos?";
+  titlePrinc="Lista de categorías :";
   name=""; 
   subname="";
   level=0;
   nivel=0;
   idItem=0;
+  catLevel=0;
+  catIdfather=0;
+  
+
 
   panelOpenState = false;
+  urlBackEnd=this.servItemService.NetWorkUrl;
 }

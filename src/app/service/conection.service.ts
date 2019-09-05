@@ -5,7 +5,7 @@ import { HttpClient, } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ConectionService {
-  NetWorkUrl="http://localhost/back-panel";
+  public NetWorkUrl="http://localhost/back-panel";
   public headers = new Headers({
     'Access-Control-Allow-Origin': '*',
   //  'Content-Type' : 'multipart/form-data',
@@ -71,6 +71,24 @@ export class ConectionService {
     const formData = new FormData();
     formData.append('id', id);
     let url =this.NetWorkUrl + "/controller/item-view-one.php";
+    return this.http.post(url, formData)
+  }
+
+  editItem(uploadForm){
+    const formData = new FormData();
+    formData.append('icon', uploadForm.get('icon').value);
+    formData.append('file', uploadForm.get('file').value);
+    formData.append('pdf', uploadForm.get('pdf').value);
+
+    formData.append('name',uploadForm.get('name').value);
+    formData.append('subname',uploadForm.get('subname').value);
+
+    formData.append('level',uploadForm.get('level').value);
+    formData.append('idfather',uploadForm.get('idfather').value);
+    formData.append('id',uploadForm.get('id').value);
+    formData.append('flag',uploadForm.get('flag').value);
+
+    let url =this.NetWorkUrl + "/controller/item-edit.php";
     return this.http.post(url, formData)
   }
 }

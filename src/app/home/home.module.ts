@@ -17,7 +17,8 @@ import {MatInputModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTreeModule} from '@angular/material/tree';
-import {MatProgressBarModule} from '@angular/material'
+import {MatProgressBarModule} from '@angular/material';
+import { QRCodeModule } from 'angular2-qrcode';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {MatProgressBarModule} from '@angular/material'
     MatInputModule,
     MatTreeModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    QRCodeModule
   ],
   providers: [
     ConectionService,
