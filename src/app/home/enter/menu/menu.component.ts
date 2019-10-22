@@ -120,8 +120,8 @@ export class MenuComponent implements OnInit {
         if(resp=="save"){
           this.hiddenProgresBar=true;
           this.hiddenPopRes=false;
-          console.log("this.catIdfather"+this.catIdfather);
-          this.consultaSubCatItemPrueba(this.catIdfather); 
+          console.log("this.catIdfather:"+this.catIdfather);
+          this.recarge1();
         }else{
           this.hiddenProgresBar=true;
           this.messagePost= resp+'\n ¿Desea Reintentar?';
@@ -186,6 +186,7 @@ export class MenuComponent implements OnInit {
   }
 
   resetItems(){
+    //this.catIdfather=0;
     this.idItem=0;
     this.hiddenPop=true;
     this.hiddenOverlay=true;
@@ -208,7 +209,7 @@ export class MenuComponent implements OnInit {
     this.uploadItemForm.get('name').setValue("");
     this.uploadItemForm.get('subname').setValue("");
     this.oneItem=new Item();
-    this.ngOnInit();
+    this.recarge1();
   }
 
   verificarCampos(){
@@ -312,7 +313,7 @@ export class MenuComponent implements OnInit {
   }
 
   exitReg(){
-    this.ngOnInit();
+    //this.ngOnInit();
     this.resetItems();
   }
 
@@ -354,17 +355,10 @@ export class MenuComponent implements OnInit {
     this.servItemService.selectOneItem(id).subscribe(
       res=>{
         var resp=JSON.parse(JSON.stringify(res))._body;
-        //console.log("res:"+resp);
         if(resp!=""){
           this.initialItem=JSON.parse(resp);
           this.oneItem=this.initialItem[0];         
           this.setItemOne();
-          /*
-          if(resp=="delete-ok"){
-            this.exitReg();
-          }else{
-            alert("ocurrio un error")
-          }*/
         }
       },
       error=>console.log("error:"+error)
@@ -375,7 +369,7 @@ export class MenuComponent implements OnInit {
     console.log("one Item ID: "+this.oneItem.id);
     this.uploadItemForm.get('id').setValue(this.oneItem.id+"");
     this.uploadItemForm.get('name').setValue(this.oneItem.name);
-    this.uploadItemForm.get('subname').setValue(this.oneItem.subname);
+    this.uploadItemForm.get('subname').setValue(this.oneItem.subname+"");
     //this.uploadItemForm.get('icon').setValue(this.oneItem.icon);
     //this.uploadItemForm.get('file').setValue(this.oneItem.file);
     //this.uploadItemForm.get('pdf').setValue(this.oneItem.pdf);
@@ -440,10 +434,13 @@ export class MenuComponent implements OnInit {
    homeListItem(){
      this.hiddenSubCat=true;
      this.titlePrinc="Lista de categorías :";
-     this.ngOnInit();
+     this.catIdfather=0;
+     this.recarge1();
+     //this.ngOnInit();
    }
 
    callSubCat(id){
+     this.catIdfather=id;
     this.oneItem=new Item();
     this.subAuxItem=new Array<Item>();
     this.subAuxItem=this.subItem;
@@ -452,8 +449,7 @@ export class MenuComponent implements OnInit {
       if(element.id==id){
         this.oneItem=element;
         this.titlePrinc=this.titlePrinc+element.name+"/"
-      } 
-      console.log("idfather:"+element.idfather);
+      }      
       if(element.idfather==id){
         this.subItem.push(element);
       }  
@@ -482,8 +478,6 @@ export class MenuComponent implements OnInit {
   saveEdit(res){
     if(res=="yes"){
       this.hiddenProgresBar=false;
-      //this.setValues();
-      //this.resetItems();
       this.onSubmitEdit();
     }
     if(res=="no"){
@@ -501,7 +495,7 @@ export class MenuComponent implements OnInit {
    this.servItemService.editItem(this.uploadItemForm).subscribe(res=>{     
       var resp=JSON.parse(JSON.stringify(res))._body;      
       if(resp!=""){
-        console.log("edit:" + resp);
+        console.log("edit:  " + resp);
         if(resp=="edit"){
           this.hiddenProgresBar=true;
           this.hiddenPopRes=false; 
@@ -537,6 +531,42 @@ export class MenuComponent implements OnInit {
       this.hiddenPdfInput=true;
     }
     this.hiddenPop=false
+  }
+  recarge1(){
+    this.oneItem=new Item();
+    this.servItemService.consultaItem().subscribe(
+      res=>{
+        var resp=JSON.parse(JSON.stringify(res))._body;
+        //console.log("resp:"+(JSON.parse(resp)));
+        if(resp!=""){
+          console.log("homeListItem:")
+          if(resp=="ErrorBase"){
+            alert("Error en la Base de Datos");
+          }
+          else{
+            this.initialItem=JSON.parse(resp);
+            //this.oneItem=this.initialItem[0];
+            if(this.catIdfather==0){
+              this.consultaItemPrinci();  
+            }
+            if(this.catIdfather>0){
+              this.consultaItemPrinci1();          
+            }
+            
+          }
+        }
+      },
+      error=>console.log(error)
+    )
+  }
+  consultaItemPrinci1(){
+    console.log("mil idfather: "+this.catIdfather);
+    this.subAuxItem = new Array<Item>(); 
+    this.initialItem.forEach(element => {
+      if(element.idfather==this.catIdfather){
+        this.subAuxItem.push(element);
+      }      
+    });
   }
   initialElemets: Array<PanelItem> =new Array<PanelItem>();
   initialItem: Array<Item> =new Array<Item>();

@@ -19,10 +19,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatProgressBarModule} from '@angular/material';
 import { QRCodeModule } from 'angular2-qrcode';
+import { InfoComponent } from './enter/info/info.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, EnterComponent, MenuComponent],
+  declarations: [HomeComponent, EnterComponent, MenuComponent, InfoComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,    

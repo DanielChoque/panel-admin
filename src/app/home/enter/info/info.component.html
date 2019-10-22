@@ -1,0 +1,144 @@
+<div [hidden]="hiddenMenu">
+        <br><br>
+        <img src="assets/img/panel/panel.png" alt="" style="width: 50%; display: block; margin: auto;" >
+        <br><br><br><br>
+    </div>
+    <!--------------------------------Menu-->
+    <div class="row justify-content-center" style="margin-right: 1px"  [hidden]="hiddenMenu">
+        <div *ngFor='let categoria of menuElements' >
+            <div class="col-sm-3">
+                <div class="about-item scrollpoint sp-effect2"  >
+                    <div style="text-align: center;" class="img-menu">
+                        <a href="#" data-toggle="modal" data-target="rts" (click)="subCat(categoria.id_panel)"><img src="{{categoria.url_image}}" style="width: 50%" alt=""></a>
+                        <h2 class="h2-u">{{categoria.name}} <br> {{categoria.subTitle}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Cabezera-->
+    <div [hidden]="hiddenMenuAux" class="header-button" style=" z-index: 3;">
+        <!--Titulo Sub Menu-->
+        <div>
+            <div class="cuadrado">
+                <h2 style="color: #002855;margin-top: -5px;font-size: 35px"> 
+                    <img src="{{itemSub.url_image}}" style="width: 120px" > {{itemSub.name}}
+                </h2> 
+                <!--span>
+                    <h2 style="color: #002855;" >{{textSub}}</h2>
+                </span-->
+            </div>
+        </div>
+        <!--Boton Back-->
+        <div class="back-button" [hidden]="hiddenBackButton">
+            <button class="home-button" (click)="buttonBack()"><img src="assets/img/panel/back.png" width="100px"></button>
+        </div>
+        <!--Boton Home-->
+        <div class="div-home" >
+            <button class="home-button" (click)="menuHome()"><img src="assets/img/panel/home.png" width="100px"></button>
+        </div>
+    </div>
+    <!-------------------------------Sub Menu-->
+    <div style="width: 70%">
+        <div class="row justify-content-center cuadrado-sub-menu" style="margin-right: 1px;transform: scale(0.8)"  [hidden]="hiddenMenuAux">
+            <div *ngFor='let categoria of subElements'>
+                <div class="col-sm-4">
+                    <div class="about-item scrollpoint sp-effect2">
+                        <div style="text-align: center;" class="img-menu">
+                            <a href="#" data-toggle="modal" data-target="rts" (click)="subCat(categoria.id_panel)"><img src="{{categoria.url_image}}" style="width: 50%" alt="" ></a>
+                            <h2 >{{categoria.name}} <br> {{categoria.subTitle}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--Panel-Informacion-->
+    <div *ngIf="panelItemUni.url_pdf" >       
+        <img class="info-image" src="{{panelItemUni.url_pdf}}" alt="">            
+        <button class="home-button" (click)="sendEmail(panelItemUni.father_id)"> <img src="assets/img/panel/email.png" alt="" style="width: 100px; margin-left: 20px;position: fixed; bottom: 400px"></button>
+    </div>
+    
+    <!--Ventana Informacion-->
+    <div>
+    
+    </div>
+    
+    <!--div *ngIf="panelItemUni.url_pdf" hidden>       
+        <iframe  [src]='pdfLink' frameborder="0" width="70%" height="850">
+            <p> 
+            Este navegador no est&aacute; configurado para mostrar PDF. Utiliza la opci&oacute;n enviar a correo<a href="https://www.impuestos.gob.bo/ckeditor/plugins/imageuploader/uploads/16409631a3.pdf">Click aqu&iacute; para descargar el PDF.</a> 
+            </p>
+        </iframe>  
+    </div-->
+    
+    <div id="container" [hidden]="hiddenEmailSend" style="transform: scale(1.5)">
+        
+        <br>
+        <div style="text-align: center">
+            <div id="result"></div>
+            <img id="loading" src="assets/img/panel/envio.gif" style="width: 100px;" hidden>
+        </div>
+        <form action="https://info-contribuyente.000webhostapp.com/sendmail.php" id="fo3" >
+            <p> 
+                <img src="assets/img/panel/email.png"  style="width: 60px"> 
+                <input type="email" id="emailstring"  name="emailModel" placeholder="ejemplo@gmail.com" style="color: black;width: 500px;" [(ngModel)]="emailModel" required>
+                <input type="text" name="" id="linksend" value="{{linkSendEmail}}" hidden>
+                <button class="button-send" type="submit" > <h2>Enviar</h2></button>
+            </p>  
+                          
+        </form>      
+          <br>
+        <ul id="keyboard">		
+            <li class="symbol"><span class="off">1</span><span class="on">!</span></li>
+            <li class="symbol"><span class="off">2</span><span class="on">@</span></li>
+            <li class="symbol"><span class="off">3</span><span class="on">#</span></li>
+            <li class="symbol"><span class="off">4</span><span class="on">$</span></li>
+            <li class="symbol"><span class="off">5</span><span class="on">%</span></li>
+            <li class="symbol"><span class="off">6</span><span class="on">^</span></li>
+            <li class="symbol"><span class="off">7</span><span class="on">&amp;</span></li>
+            <li class="symbol"><span class="off">8</span><span class="on">*</span></li>
+            <li class="symbol"><span class="off">9</span><span class="on">(</span></li>
+            <li class="symbol"><span class="off">0</span><span class="on">)</span></li>		
+            
+            <li class="letter">q</li>
+            <li class="letter">w</li>
+            <li class="letter">e</li>
+            <li class="letter">r</li>
+            <li class="letter">t</li>
+            <li class="letter">y</li>
+            <li class="letter">u</li>
+            <li class="letter">i</li>
+            <li class="letter">o</li>
+            <li class="letter">p</li>
+        
+            <li class="letter">a</li>
+            <li class="letter">s</li>
+            <li class="letter">d</li>
+            <li class="letter">f</li>
+            <li class="letter">g</li>
+            <li class="letter">h</li>
+            <li class="letter">j</li>
+            <li class="letter">k</li>
+            <li class="letter">l</li>
+            <li class="symbol ap"><span class="off">_</span><span class="on">_</span></li>
+            
+            <li class="letter">z</li>
+            <li class="letter">x</li>
+            <li class="letter">c</li>
+            <li class="letter">v</li>
+            <li class="letter">b</li>
+            <li class="letter">n</li>
+            <li class="letter">m</li>
+            
+            <li class="symbol ap"><span class="off">.</span><span class="on">&gt;</span></li>
+            <li class="symbol ap"><span class="off">-</span><span class="on">_</span></li>
+            <li class="symbol apa"><span class="off">@</span><span class="on">_</span></li>
+            <li class="return lastitem btne" (click)="buttonSalir()">Salir</li>
+            <li class="space1 lastitem" ></li>
+        
+            <li class="delete lastitem btnd">Borrar</li>
+            <li class="letter">.com</li>		
+          </ul>
+    </div>

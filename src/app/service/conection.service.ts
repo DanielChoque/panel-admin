@@ -89,6 +89,23 @@ export class ConectionService {
     formData.append('flag',uploadForm.get('flag').value);
 
     let url =this.NetWorkUrl + "/controller/item-edit.php";
+    return this.http.post(url, formData);
+  }
+  login(uploadForm){
+    const formData=new FormData();
+    formData.append('func',uploadForm.get('func').value);
+    formData.append('name',uploadForm.get('name').value);
+    formData.append('password',uploadForm.get('password').value);
+    let url = this.NetWorkUrl+"/controller/item-user.php";
+    return this.http.post(url, formData);    
+  }
+  
+  selectOneItemP(){
+    const formData = new FormData();
+    formData.append('cod_sim', 'Danielchoq');
+    let url ="http://sac.impuestos.gob.bo/sinapp/ServBuscaAutomaticoAutenticacion.php";
+    console.log("url: "+url);
+  
     return this.http.post(url, formData)
   }
 }

@@ -253,9 +253,9 @@
     <mat-accordion>
         <mat-expansion-panel *ngFor='let element of princItem'>
             <mat-expansion-panel-header  (click)="consultaSubCatItemPrueba(element.id)">
-            <mat-panel-title>
+            <!--mat-panel-title>
                 
-            </mat-panel-title>
+            </mat-panel-title-->
             <mat-panel-description>
                 <div>                  
                 <img src="{{urlBackEnd}}/archivos/{{element.iconObj.name}}" style="width: 5%" alt="" > 
@@ -299,9 +299,9 @@
     <mat-accordion>
         <mat-expansion-panel *ngFor='let element of subAuxItem'>
             <mat-expansion-panel-header  (click)="consultaSubCatItemPrueba(element.id)">
-            <mat-panel-title>
+            <!--mat-panel-title>
                 
-            </mat-panel-title>
+            </mat-panel-title-->
             <mat-panel-description>
                 <div style="border-color:black ">                  
                 <img src="{{urlBackEnd}}/archivos/{{element.iconObj.name}}" style="width: 5%" alt="" > 
@@ -329,7 +329,7 @@
                 </tr>
             </div> 
             <div>
-                <img *ngIf="element.file>0" src="{{urlBackEnd}}/{{element.fileObj.name}}" alt="" style="width: 600px">
+                <img *ngIf="element.file>0" src="{{urlBackEnd}}/archivos/{{element.fileObj.name}}" alt="" style="width: 600px">
             </div>
             <mat-action-row>
                 <button mat-button (click)="funtionEditItem(element.id)">Editar</button>&nbsp;&nbsp;&nbsp;&nbsp;
