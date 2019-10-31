@@ -1,0 +1,75 @@
+  h1{
+      color: blue;
+  }
+
+h2{
+	font-display: block;
+	font-family: Arial;
+	color: white;
+	font-style:	normal;
+	font-size: 20px;
+}
+
+  p{
+    color: white;
+    font-size: 18px
+  }
+  .p-1{
+    color: white;
+    font-size: 16px
+  }
+.col-xs-5,
+.col-sm-5,
+.col-md-5,
+.col-lg-5 {
+
+  min-height: 1px; 
+  position: relative;
+
+}
+
+.col-xs-5 {
+  float: left;
+  width: 20%;
+
+}
+
+@media (min-width: 768px) {
+
+    .col-sm-5 {
+      float: left;
+      width: 20%;
+  
+    }
+  
+  }
+  
+  @media (min-width: 992px) {
+  
+    .col-md-5 {
+      float: left;
+      width: 20%;
+  
+    }
+  }
+  
+  @media (min-width: 1200px) {
+  
+    .col-lg-5 {
+      float: left;
+      width: 20%;
+    }
+  
+  }
+/*ESTILOS PARA EL MODAL
+
+@media (min-width: 1200px) {
+  
+	.modal-content{
+		width:200%;
+	}
+	.centered-modal{
+		padding-right: 80%;
+	}
+  
+  }*/

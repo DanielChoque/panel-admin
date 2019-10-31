@@ -568,6 +568,29 @@ export class MenuComponent implements OnInit {
       }      
     });
   }
+  updateData(){       
+        this.servItemService.updateData().subscribe(res=>{     
+           var resp=JSON.parse(JSON.stringify(res))._body;      
+           if(resp!=""){
+             console.log("updateData:  " + resp);
+             if(resp=="ok"){
+               this.hiddenProgresBar=true;
+               this.hiddenPopRes=false; 
+               //this.resetItems();
+             }else{
+               this.hiddenProgresBar=true;
+               this.messagePost= resp+'\n ¿Desea Reintentar?';
+             }
+           }
+           console.log("not edit:" + resp);
+         },
+         error=>{
+           console.log("error:"+error);
+           this.hiddenProgresBar=true;
+           this.messagePost='NO SE PUEDEN GUARDAR LOS ELEMENTOS \n ¿Desea Reintentar?';
+         }) 
+  }
+
   initialElemets: Array<PanelItem> =new Array<PanelItem>();
   initialItem: Array<Item> =new Array<Item>();
   oneElement:PanelItem=new PanelItem();

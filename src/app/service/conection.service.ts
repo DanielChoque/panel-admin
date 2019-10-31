@@ -15,10 +15,7 @@ export class ConectionService {
   });
 
   constructor(private http: Http,private httpClient: HttpClient) { }
-  consultaResp() {    
-    let url = this.NetWorkUrl + "/conec.php";
-    return this.http.get(url);
-  }
+ 
 
   consultaItem() {    
     let url = this.NetWorkUrl + "/controller/a.php";
@@ -108,4 +105,15 @@ export class ConectionService {
   
     return this.http.post(url, formData)
   }
+  consultaResp() {
+    //let url = "https://daniel-berserk-hunter.000webhostapp.com/conec.php";
+    //let url = "http://localhost/p/conec.php";
+    //let url = "http://localhost/bac/conec.php";
+    let url = "http://sac.impuestos.gob.bo/panel/conec.php";
+     return this.http.get(url);
+   }
+   updateData() {
+    let url = this.NetWorkUrl + "/controller/update-date.php";
+     return this.http.get(url);
+   }
 }
