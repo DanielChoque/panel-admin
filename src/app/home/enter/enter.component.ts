@@ -34,6 +34,9 @@ export class EnterComponent implements OnInit {
             this.hiddenMenu=false;
             //this.router.navigate(['/menu']);  
           }
+          else{
+            this.hiddenPopPupError=false
+          }
         }
       },
       error=>console.log("error:"+error)
@@ -51,6 +54,11 @@ export class EnterComponent implements OnInit {
     )
   }
 
+  handleInput(){
+    this.hiddenPopPupError=true
+  }
+
   uploadItemForm:FormGroup;
   hiddenMenu:boolean=true;
+  hiddenPopPupError:boolean=true;
 }

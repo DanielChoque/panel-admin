@@ -12,8 +12,8 @@
       
           <!-- Login Form -->
           <form  [formGroup] = "uploadItemForm" >
-            <input type="text"   formControlName="name" class="fadeIn second"  placeholder="nombre">
-            <input type="password"   formControlName="password" placeholder="password" style="background-color: #f6f6f6; border: none;   color: #0d0d0d;   padding: 15px 32px;     text-align: center;        text-decoration: none;        display: inline-block;        font-size: 16px;        margin: 5px;        width: 85%;        border: 2px solid #f6f6f6;        transition: all 0.5s ease-in-out;        border-radius: 5px 5px 5px 5px;"><br>
+            <input type="text"  (keypress)="handleInput()" formControlName="name" class="fadeIn second"  placeholder="Usuario" >
+            <input type="password"   (keypress)="handleInput()" formControlName="password" placeholder="Password" style="background-color: #f6f6f6; border: none;   color: #0d0d0d;   padding: 15px 32px;     text-align: center;        text-decoration: none;        display: inline-block;        font-size: 16px;        margin: 5px;        width: 85%;        border: 2px solid #f6f6f6;        transition: all 0.5s ease-in-out;        border-radius: 5px 5px 5px 5px;"><br>
             <input type="submit" class="fadeIn fourth" value="INICIAR" (click)="init()">
           </form>
     
@@ -21,13 +21,16 @@
           <input type="text" id="password" class="fadeIn third"  placeholder="password">
           <input type="submit" class="fadeIn fourth" value="INICIAR" (click)="init()"-->
           <!-- Remind Passowrd -->
-          <div id="formFooter" hidden>
+          <div id="formFooter" hidden >
             <a class="underlineHover" href="#">Forgot Password?</a>
           </div>
-      
+          <div [hidden]="hiddenPopPupError">
+            <p style="color: red;">Usuario/Contraseña incorrecta</p>
+          </div>
         </div>
       </div>
 </div>
+
 <!--div>
   <button (click)="init2()">rets</button>
 </div-->

@@ -94,8 +94,8 @@
                 
                 <tr>
                     <th class="img-add">
-                        <button type="button" mat-raised-button (click)="fileInputIcon.click()">ICONO</button>
-                        <input hidden  #fileInputIcon type="file" accept='image/*' name="icon" (change)="selectIcon(fileInputIcon.files)">
+                        <button type="button" mat-raised-button (click)="fileInputIcon.click()">ICONOs</button>
+                        <input [hidden]="hiddenIcon"   #fileInputIcon type="file" accept='image/*' name="icon" (change)="selectIcon(fileInputIcon.files)" [hidden]="hiddenIcon">
                         <span style="color:red;" *ngIf="messageIcon">{{messageIcon}}</span>
                     </th>
                     <th>
@@ -289,8 +289,8 @@
     </mat-accordion>
 </div>
 
-<button type="button" [hidden]="hiddenSubCat">Atras</button>
-<button type="button" (click)="homeListItem()" [hidden]="hiddenSubCat">Home</button>
+<button type="button" [hidden]="hiddenSubCat" (click)="callSubCat(174)">Atras</button>
+<button type="button" (click)="homeListItem()" [hidden]="hiddenSubCat" mat-raised-button>Home</button>
 
 
 <!--PRUEBAS Sub cat-->
@@ -368,5 +368,5 @@
         <button mat-raised-button  color="warn" type="reset" (click)="functionItem('salirPop')">Cancelar</button>
 </div>
 <div>
-    <button (click)="updateData()">Actualizar</button>
+    <button mat-raised-button color="primary" (click)="updateData()">Actualizar</button>
 </div>

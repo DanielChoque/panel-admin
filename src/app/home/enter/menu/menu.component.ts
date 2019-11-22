@@ -455,6 +455,7 @@ export class MenuComponent implements OnInit {
       }  
     });
     this.hiddenSubCat=false;
+    console.log("Daniel")
   }
 
   consultaSubCatItemPrueba(id){
@@ -591,6 +592,25 @@ export class MenuComponent implements OnInit {
          }) 
   }
 
+  callSubCat2(id){
+    this.catIdfather=id;
+   this.oneItem=new Item();
+   this.subAuxItem=new Array<Item>();
+   this.subAuxItem=this.subItem;
+   this.subItem=new Array<Item>();
+   this.initialItem.forEach(element => {
+     if(element.id==id){
+       this.oneItem=element;
+       this.titlePrinc=this.titlePrinc+element.name+"/"
+     }      
+     if(element.idfather==id){
+       this.subItem.push(element);
+     }  
+   });
+   this.hiddenSubCat=false;
+   console.log("Daniel")
+ }
+
   initialElemets: Array<PanelItem> =new Array<PanelItem>();
   initialItem: Array<Item> =new Array<Item>();
   oneElement:PanelItem=new PanelItem();
@@ -636,7 +656,7 @@ export class MenuComponent implements OnInit {
   idItem=0;
   catLevel=0;
   catIdfather=0;
-  
+  hiddenIcon:boolean=true;
 
 
   panelOpenState = false;
