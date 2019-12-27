@@ -128,4 +128,8 @@ span{
     top: 0;
     background: rgba(51,51,51,0.7);
     z-index: 99999;
+    text-align: center ;
+  }
+  .img-button{
+      display: none;   
   }

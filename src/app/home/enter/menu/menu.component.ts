@@ -534,6 +534,7 @@ export class MenuComponent implements OnInit {
     this.hiddenPop=false
   }
   recarge1(){
+    console.log("homeListItem1:")
     this.oneItem=new Item();
     this.servItemService.consultaItem().subscribe(
       res=>{
@@ -569,7 +570,8 @@ export class MenuComponent implements OnInit {
       }      
     });
   }
-  updateData(){       
+  updateData(){
+        this.hiddenOverlaySave=false;
         this.servItemService.updateData().subscribe(res=>{     
            var resp=JSON.parse(JSON.stringify(res))._body;      
            if(resp!=""){
@@ -578,6 +580,7 @@ export class MenuComponent implements OnInit {
                this.hiddenProgresBar=true;
                this.hiddenPopRes=false; 
                //this.resetItems();
+               this.hiddenOverlaySave=true;
              }else{
                this.hiddenProgresBar=true;
                this.messagePost= resp+'\n ¿Desea Reintentar?';
@@ -586,6 +589,7 @@ export class MenuComponent implements OnInit {
            console.log("not edit:" + resp);
          },
          error=>{
+          this.hiddenOverlaySave=true
            console.log("error:"+error);
            this.hiddenProgresBar=true;
            this.messagePost='NO SE PUEDEN GUARDAR LOS ELEMENTOS \n ¿Desea Reintentar?';
@@ -593,23 +597,72 @@ export class MenuComponent implements OnInit {
   }
 
   callSubCat2(id){
+    this.deleteForm()
+    this.subAuxItem=new Array<Item>();
+    this.subItem=new Array<Item>();
+    this.princItem= new Array<Item>();
+    //this.hiddenSubCat=true
+    this.consultaSubCatItemPrueba2(id)
+    this.hiddenSubCat=false;
     this.catIdfather=id;
-   this.oneItem=new Item();
-   this.subAuxItem=new Array<Item>();
-   this.subAuxItem=this.subItem;
-   this.subItem=new Array<Item>();
-   this.initialItem.forEach(element => {
-     if(element.id==id){
-       this.oneItem=element;
-       this.titlePrinc=this.titlePrinc+element.name+"/"
-     }      
-     if(element.idfather==id){
-       this.subItem.push(element);
-     }  
-   });
-   this.hiddenSubCat=false;
-   console.log("Daniel")
+    this.oneItem=new Item();
+    this.subAuxItem=new Array<Item>();
+    this.subAuxItem=this.subItem;
+    this.subItem=new Array<Item>();
+    console.log("initialItem:"+JSON.stringify(this.subAuxItem))
+    console.log("ID:"+id+" ")
+    this.initialItem.forEach(element => {
+      if(element.id==id){
+        this.oneItem=element;
+        this.titlePrinc=this.titlePrinc+element.name+"/"
+      }      
+      if(element.idfather==id){
+        this.subItem.push(element);
+      }  
+    });
+    this.hiddenSubCat=false;
+    console.log("Daniel")
  }
+ consultaSubCatItemPrueba2(id){    
+  this.subItem = new Array<Item>();
+  if(this.subAuxItem.length>0){
+    this.initialItem.forEach(element => {        
+    if(element.idfather==id){
+      this.catIdfather=id;
+      this.subItem.push(element);
+    }
+  });
+  }else{
+    this.initialItem.forEach(element => {
+    if(element.idfather==id){
+      this.subItem.push(element);
+    }      
+  });
+  }     
+}
+deleteForm(){
+  this.subAuxItem=new Array<Item>();
+  this.subItem=new Array<Item>();
+  this.princItem= new Array<Item>();
+  //this.menuPrincipal()
+  this.princItem = new Array<Item>(); 
+  this.initialItem.forEach(element => {
+    if(element.idfather==0){
+      this.princItem.push(element);
+    }      
+  });
+}
+
+menuPrincipal(){
+  console.log("homeListItem1:")
+  this.oneItem=new Item();
+  if(this.catIdfather==0){
+    this.consultaItemPrinci();  
+  }
+  if(this.catIdfather>0){
+    this.consultaItemPrinci1();          
+  }
+}
 
   initialElemets: Array<PanelItem> =new Array<PanelItem>();
   initialItem: Array<Item> =new Array<Item>();
@@ -632,7 +685,7 @@ export class MenuComponent implements OnInit {
   hiddenPopTypeCat:boolean=true;
   hiddenFileInput:boolean=true;
   hiddenPdfInput:boolean=true;
-  
+  hiddenOverlaySave:boolean=true;
   
   uploadItemForm:FormGroup;
   

@@ -1,43 +1,6 @@
 <div style="width: 70%;    text-align: center;" hidden>
     <button class="btn-actualizar" (click)=" ngOnInit()" >Actualizar</button>
-</div>
-<br>
-
-
-
-<!--Obtenidos por sqlite-->
-<div style="width: 90%" *ngFor='let element of princElement' hidden> 
-    <mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false">        
-        <mat-expansion-panel-header (click)=" consultaSubCat(element.id_panel)">       
-          <mat-panel-title>
-              <div>                  
-                    <img src="{{element.url_image}}" style="width: 5%" alt="" > {{element.name}}                 
-              </div>
-          </mat-panel-title>
-          <mat-panel-description class="">
-               
-          </mat-panel-description>
-        </mat-expansion-panel-header> 
-        <div class="">
-            <tr>
-                <th style="width: 90%">
-                    <div *ngFor='let categoria of subElements' >
-                        <div style="margin-left: 10px"> 
-                            <img src="{{categoria.url_image}}" style="width: 5%" alt="">
-                            {{categoria.name}}
-                        </div>                        
-                    </div> 
-                </th>                
-            </tr>
-        </div>      
-             
-        <mat-action-row>
-          <button mat-button>Click me</button>
-        </mat-action-row>
-    </mat-expansion-panel>
-</mat-accordion>
+    <button  (click)=" ngOnInit()" >Actualizar</button>
 </div>
 <br>
 
@@ -94,8 +57,8 @@
                 
                 <tr>
                     <th class="img-add">
-                        <button type="button" mat-raised-button (click)="fileInputIcon.click()">ICONOs</button>
-                        <input [hidden]="hiddenIcon"   #fileInputIcon type="file" accept='image/*' name="icon" (change)="selectIcon(fileInputIcon.files)" [hidden]="hiddenIcon">
+                        <button type="button" mat-raised-button (click)="fileInputIcon.click()">ICONO</button>
+                        <input [hidden]="hiddenIcon" class="img-button"  #fileInputIcon type="file" accept='image/*' name="icon" (change)="selectIcon(fileInputIcon.files)" [hidden]="hiddenIcon">
                         <span style="color:red;" *ngIf="messageIcon">{{messageIcon}}</span>
                     </th>
                     <th>
@@ -108,7 +71,7 @@
                 <tr [hidden]="hiddenFileInput">
                     <th class="img-add">
                         <button type="button" mat-raised-button (click)="fileInputFile.click()">IMÁGENES</button>
-                        <input hidden  #fileInputFile type="file" accept='image/*' name="file" (change)="selectFile(fileInputFile.files)">
+                        <input hidden class="img-button" #fileInputFile type="file" accept='image/*' name="file" (change)="selectFile(fileInputFile.files)">
                         <span style="color:red;" *ngIf="messageFile">{{messageFile}}</span>
                     </th>
                     <th>
@@ -121,7 +84,7 @@
                 <tr  [hidden]="hiddenPdfInput">
                     <th class="img-add">
                         <button type="button" mat-raised-button (click)="fileInputPdf.click()">PDF</button>
-                        <input hidden  #fileInputPdf type="file" accept='application/pdf' name="pdf" (change)="selectPdf(fileInputPdf.files)">
+                        <input hidden class="img-button" #fileInputPdf type="file" accept='application/pdf' name="pdf" (change)="selectPdf(fileInputPdf.files)">
                     </th>
                     <th>
                         <div>
@@ -289,8 +252,9 @@
     </mat-accordion>
 </div>
 
-<button type="button" [hidden]="hiddenSubCat" (click)="callSubCat(174)">Atras</button>
-<button type="button" (click)="homeListItem()" [hidden]="hiddenSubCat" mat-raised-button>Home</button>
+<!--button type="button" [hidden]="hiddenSubCat" (click)="callSubCat2(175)">Atras</button>
+<button type="button" [hidden]="hiddenSubCat" (click)="deleteForm()">borrar</button-->
+<button type="button" (click)="homeListItem()" [hidden]="hiddenSubCat" mat-raised-button>Menu Principal</button>
 
 
 <!--PRUEBAS Sub cat-->
@@ -298,7 +262,7 @@
         <pre>{{titlePrinc}}</pre>
     <mat-accordion>
         <mat-expansion-panel *ngFor='let element of subAuxItem'>
-            <mat-expansion-panel-header  (click)="consultaSubCatItemPrueba(element.id)">
+            <mat-expansion-panel-header  (click)="consultaSubCatItemPrueba(element.id)" (opened)="panelOpenState = true">
             <!--mat-panel-title>
                 
             </mat-panel-title-->
@@ -336,18 +300,6 @@
                 <button mat-raised-button  color="warn" (click)="funtionDeleteItem(element.id)">Eliminar</button>
             </mat-action-row>
         </mat-expansion-panel>
-        <!--mat-expansion-panel (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false" [hidden]="true">
-            <mat-expansion-panel-header>
-            <mat-panel-title>
-                Self aware panel
-            </mat-panel-title>
-            <mat-panel-description>
-                Currently I am {{panelOpenState ? 'open' : 'closed'}}
-            </mat-panel-description>
-            </mat-expansion-panel-header>
-            <p>I'm visible because I am open</p>
-        </mat-expansion-panel-->
     </mat-accordion>
 </div>
 
@@ -369,4 +321,9 @@
 </div>
 <div>
     <button mat-raised-button color="primary" (click)="updateData()">Actualizar</button>
+</div>
+<div class='overlay' [hidden]="hiddenOverlaySave">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="assets/img/panel/img-load-data.gif" style="width: 20%;">
+        <h3 style="margin-top: -5%; color: white;">Guardando</h3>
 </div>
