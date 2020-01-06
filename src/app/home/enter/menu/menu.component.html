@@ -143,7 +143,7 @@
                         <tr>
                             <th class="img-add">
                                 <button type="button" mat-raised-button (click)="fileInputIcon.click()">ICONO</button>
-                                <input hidden  #fileInputIcon type="file" accept='image/*' name="icon" (change)="selectIcon(fileInputIcon.files)">
+                                <input class="img-button" hidden  #fileInputIcon type="file" accept='image/*' name="icon" (change)="selectIcon(fileInputIcon.files)">
                                 <span style="color:red;" *ngIf="messageIcon">{{messageIcon}}</span>
                             </th>
                             <th>
@@ -156,7 +156,7 @@
                         <tr [hidden]="hiddenFileInput">
                             <th class="img-add">
                                 <button type="button" mat-raised-button (click)="fileInputFile.click()">IMÁGENES(opcional)</button>
-                                <input hidden  #fileInputFile type="file" accept='image/*' name="file" (change)="selectFile(fileInputFile.files)">
+                                <input class="img-button" hidden  #fileInputFile type="file" accept='image/*' name="file" (change)="selectFile(fileInputFile.files)">
                                 <span style="color:red;" *ngIf="messageFile">{{messageFile}}</span>
                             </th>
                             <th>
@@ -169,7 +169,7 @@
                         <tr [hidden]="hiddenPdfInput">
                             <th class="img-add">
                                 <button type="button" mat-raised-button (click)="fileInputPdf.click()">PDF</button>
-                                <input hidden  #fileInputPdf type="file" accept='application/pdf' name="pdf" (change)="selectPdf(fileInputPdf.files)">
+                                <input class="img-button" hidden  #fileInputPdf type="file" accept='application/pdf' name="pdf" (change)="selectPdf(fileInputPdf.files)">
                             </th>
                             <th>
                                 <div>
@@ -190,7 +190,8 @@
                     <button mat-stroked-button  color="primary" type="submit"  (click)="saveEdit('yes')">Si</button> &nbsp;&nbsp;&nbsp;&nbsp;
                     <button mat-raised-button  color="warn" type="reset" (click)="saveEdit('no')">No</button>
                 </div>
-                <div id="popupQ" [hidden]="hiddenPopRes">   
+                <!--<div id="popupQ" [hidden]="hiddenPopRes"-->
+                    <div id="popupQ" [hidden]="true">
                     <br>
                     <p style="color: green;font-size: 25px">Registro correcto</p>
                     <br>
@@ -238,7 +239,7 @@
                         </div>                         
                     </th>    
                     <th style="width: 10%;">
-                        <button mat-button (click)="callSubCat(element.id)">Agregar o Modificar Contenido</button>&nbsp;&nbsp;&nbsp;
+                        <button mat-button (click)="callSubCat(element.id)">Visualizar Contenido </button>&nbsp;&nbsp;&nbsp;
                         <!--button mat-raised-button  color="warn" (click)="deleteCat(categoria.id_panel)">Eliminar</button-->
                     </th>            
                 </tr>
@@ -287,7 +288,7 @@
                         </div> 
                     </th>
                     <th style="width: 10%;">
-                        <button mat-button (click)="callSubCat(element.id)">Agregar o Modificar Contenido</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button mat-button (click)="callSubCat(element.id)">Visualizar Contenido </button>&nbsp;&nbsp;&nbsp;&nbsp;
                         <!--button mat-raised-button  color="warn" (click)="deleteCat(categoria.id_panel)">Eliminar</button-->
                     </th>                  
                 </tr>
