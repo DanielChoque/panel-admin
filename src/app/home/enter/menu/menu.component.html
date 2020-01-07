@@ -105,7 +105,8 @@
             <button mat-stroked-button  color="primary" type="submit"  (click)="save('yes')">Si</button> &nbsp;&nbsp;&nbsp;&nbsp;
             <button mat-raised-button  color="warn" type="reset" (click)="save('no')">No</button>
         </div>
-        <div id="popupQ" [hidden]="hiddenPopRes">   
+        <!--div id="popupQ" [hidden]="hiddenPopRes"-->   
+        <div id="popupQ" [hidden]="true">   
             <br>
             <p style="color: green;font-size: 25px">Registro correcto</p>
             <br>
@@ -155,7 +156,7 @@
                             
                         <tr [hidden]="hiddenFileInput">
                             <th class="img-add">
-                                <button type="button" mat-raised-button (click)="fileInputFile.click()">IMÁGENES(opcional)</button>
+                                <button type="button" mat-raised-button (click)="fileInputFile.click()">IMÁGENES</button>
                                 <input class="img-button" hidden  #fileInputFile type="file" accept='image/*' name="file" (change)="selectFile(fileInputFile.files)">
                                 <span style="color:red;" *ngIf="messageFile">{{messageFile}}</span>
                             </th>

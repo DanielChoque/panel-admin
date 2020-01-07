@@ -22,7 +22,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.oneItem=new Item();
-    this.consultaStar();    
+    //this.consultaStar();    
+    this.recarge1()
       this.uploadItemForm = this.formBuilder.group({
       icon: ['', Validators.required],
       file: [''],
