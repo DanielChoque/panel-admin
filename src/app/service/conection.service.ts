@@ -6,6 +6,7 @@ import { HttpClient, } from '@angular/common/http';
 })
 export class ConectionService {
   public NetWorkUrl="http://localhost/back-panel";
+  //public NetWorkUrl="http://sac.impuestos.gob.bo/panel.back";
   public headers = new Headers({
     'Access-Control-Allow-Origin': '*',
   //  'Content-Type' : 'multipart/form-data',
@@ -109,7 +110,7 @@ export class ConectionService {
     //let url = "https://daniel-berserk-hunter.000webhostapp.com/conec.php";
     //let url = "http://localhost/p/conec.php";
     //let url = "http://localhost/bac/conec.php";
-    let url = "http://sac.impuestos.gob.bo/panel/conec.php";
+    let url = this.NetWorkUrl+"/conec.php";
      return this.http.get(url);
    }
    updateData() {
